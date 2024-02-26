@@ -18,6 +18,7 @@ import Steel from './assets/Steel.svg';
 import Water from './assets/Water.svg';
 
 import Reset from './assets/Reset.svg';
+import Random from './assets/Random.svg';
 
 export {
     Bug, Dark, Dragon, Electric,
@@ -25,5 +26,5 @@ export {
     Ghost, Grass, Ground, Ice,
     Normal, Poison, Psychic, Rock,
     Steel, Water,
-    Reset,
+    Reset, Random,
 }
