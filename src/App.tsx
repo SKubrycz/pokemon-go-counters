@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef } from 'react';
+import {useState, useEffect, useRef, ReactInstance } from 'react';
 
 import './App.scss';
 
@@ -78,10 +78,6 @@ function App() {
       }
     });
     console.log(weak);
-
-    if (selectedImage) {
-      setWeak([selectedImage[1]?.weakAgainst]);
-    }
   }
 
   const randomizeTypes = () => {
@@ -99,7 +95,7 @@ function App() {
     if (typesArray) {
       if (randomSecond >= 18) randomSecond = null;
       console.log(`${randomFirst}, ${randomSecond}`);
-      setSelectedImage(prevImages => {
+      setSelectedImage(() => {
         if (randomSecond) {
           return [typesArray[randomFirst], typesArray[randomSecond]];
         } else if (randomSecond === null) {
@@ -107,6 +103,21 @@ function App() {
         } else return [typesArray[randomFirst], typesArray[randomSecond]];
       });
     }
+  }
+
+  const mapCounters = (condition1: string[] | undefined, condition2: string | undefined, index: number) => {
+    if (condition2 && 
+      condition1?.includes(condition2)) {
+        return 
+      } else {
+        return (
+          <img
+            key={index}
+            className='types-img'
+            src={condition2}
+          ></img>
+        )
+      }
   }
   
   const resetTypes = () => {
@@ -122,24 +133,16 @@ function App() {
           <div className='weak-container'>
             <h4>Weak Against:</h4>
             <div className='counters-img-container'>
-              <img
-                className='types-img'
-                src={typesArray[1].src}
-                title={typesArray[1].title}
-                alt={typesArray[1].alt}
-              />
-              <img
-                className='types-img'
-                src={typesArray[2].src}
-                title={typesArray[2].title}
-                alt={typesArray[2].alt}
-              />
-              <img
-                className='types-img'
-                src={typesArray[3].src}
-                title={typesArray[3].title}
-                alt={typesArray[3].alt}
-              />
+              {
+                selectedImage && selectedImage[0]?.weakAgainst.map((type, index) => {
+                  return mapCounters(selectedImage?.[1]?.weakAgainst, selectedImage?.[0]?.weakAgainst?.[index], index);
+                })
+              }
+              {
+                selectedImage && selectedImage[1]?.weakAgainst.map((type, index) => {
+                  return mapCounters(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst?.[index], index);
+                })
+              }
             </div>
           </div>
           <div className='types-container'>
@@ -170,12 +173,29 @@ function App() {
           <div className='strong-container'>
             <h4>Strong Against:</h4>
             <div className='counters-img-container'>
-              <img
-                className='types-img'
-                src={typesArray[0].src}
-                title={typesArray[0].title}
-                alt={typesArray[0].alt}
-              />
+              {
+                selectedImage && selectedImage[0]?.strongAgainst.map((type, index) => {
+                  return mapCounters(selectedImage?.[1]?.strongAgainst, selectedImage?.[0]?.strongAgainst?.[index], index);
+                })
+              }
+              {
+                selectedImage && selectedImage[1]?.strongAgainst.map((type, index) => {
+                  return mapCounters(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst?.[index], index);
+
+                  /* if (selectedImage?.[1]?.strongAgainst?.[index] && 
+                  selectedImage?.[0]?.strongAgainst.includes(selectedImage?.[1]?.strongAgainst?.[index])) {
+                    return   
+                  } else {
+                    return (
+                      <img
+                        key={index}
+                        className='types-img'
+                        src={selectedImage?.[1]?.strongAgainst?.[index]}
+                      ></img>
+                    )
+                  } */
+                })
+              }
             </div>
           </div>
         </div>
