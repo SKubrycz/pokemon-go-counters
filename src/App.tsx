@@ -3,7 +3,7 @@ import {useState, useEffect, useRef } from 'react';
 import './App.scss';
 
 import {
-  Reset,
+  Reset, Random
 } from './image-import';
 
 import { Type, getTypes } from './getTypes';
@@ -83,6 +83,31 @@ function App() {
       setWeak([selectedImage[1]?.weakAgainst]);
     }
   }
+
+  const randomizeTypes = () => {
+    let randomFirst: number = Math.floor(Math.random()*18);
+    let randomSecond: number | null = Math.floor(Math.random()*(18*1.2));
+
+    if (randomFirst === randomSecond) {
+      if (randomFirst < 1) {
+        randomSecond += 1;
+      } else if (randomFirst > 1) {
+        randomSecond -= 1;
+      }
+    }
+
+    if (typesArray) {
+      if (randomSecond >= 18) randomSecond = null;
+      console.log(`${randomFirst}, ${randomSecond}`);
+      setSelectedImage(prevImages => {
+        if (randomSecond) {
+          return [typesArray[randomFirst], typesArray[randomSecond]];
+        } else if (randomSecond === null) {
+          return [typesArray[randomFirst], ];
+        } else return [typesArray[randomFirst], typesArray[randomSecond]];
+      });
+    }
+  }
   
   const resetTypes = () => {
     setSelectedImage(null);
@@ -90,32 +115,68 @@ function App() {
     setStrong(undefined);
   }
 
-
   return (
     <div className='app'>
         <div className='title'>Pokemon Go Type Counters</div>
-        <div className='types-container'>
-          <div className='types-chosen'>
-            <div className='types-chosen-absolute'>
-            {selectedImage && selectedImage.map((image, index) => (
-              <img key={index} className='types-img' onClick={() => chooseType(image)} src={image?.src || ''} alt={image?.alt || ''} title={image?.title || ''} />
-            ))}
-            </div>
-            <div className='types-reset-container'>
-              <img className='types-reset' src={Reset} onClick={resetTypes} title='Reset' alt='reset'></img>
+        <div className='all-container'>
+          <div className='weak-container'>
+            <h4>Weak Against:</h4>
+            <div className='counters-img-container'>
+              <img
+                className='types-img'
+                src={typesArray[1].src}
+                title={typesArray[1].title}
+                alt={typesArray[1].alt}
+              />
+              <img
+                className='types-img'
+                src={typesArray[2].src}
+                title={typesArray[2].title}
+                alt={typesArray[2].alt}
+              />
+              <img
+                className='types-img'
+                src={typesArray[3].src}
+                title={typesArray[3].title}
+                alt={typesArray[3].alt}
+              />
             </div>
           </div>
-          <div className='types-all'>
-          {typesArray.map((type, index) => (
+          <div className='types-container'>
+            <div className='types-chosen'>
+              <div className='types-chosen-absolute'>
+              {selectedImage && selectedImage.map((image, index) => (
+                <img key={index} className='types-img' onClick={() => chooseType(image)} src={image?.src || ''} alt={image?.alt || ''} title={image?.title || ''} />
+              ))}
+              </div>
+              <div className='types-reset-container'>
+                <img className='types-reset' src={Random} onClick={randomizeTypes} title='Randomize' alt='randomize'></img>
+                <img className='types-reset' src={Reset} onClick={resetTypes} title='Reset' alt='reset'></img>
+              </div>
+            </div>
+            <div className='types-all'>
+            {typesArray.map((type, index) => (
+                <img
+                  key={index}
+                  className='types-img'
+                  src={type.src}
+                  onClick={() => chooseType(type)}
+                  title={type.title}
+                  alt={type.alt}
+                />
+              ))}
+            </div>
+          </div>
+          <div className='strong-container'>
+            <h4>Strong Against:</h4>
+            <div className='counters-img-container'>
               <img
-                key={index}
                 className='types-img'
-                src={type.src}
-                onClick={() => chooseType(type)}
-                title={type.title}
-                alt={type.alt}
+                src={typesArray[0].src}
+                title={typesArray[0].title}
+                alt={typesArray[0].alt}
               />
-            ))}
+            </div>
           </div>
         </div>
     </div>
