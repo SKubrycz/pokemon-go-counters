@@ -47,6 +47,7 @@ body, html {
 
 .weak-container, .strong-container {
     width: 30%;
+    max-width: 30%;
 
     margin: .8em 1em 1em 1em;
     
@@ -65,6 +66,7 @@ body, html {
 .counters-img-container {
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
