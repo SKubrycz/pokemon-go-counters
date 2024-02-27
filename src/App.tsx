@@ -105,12 +105,15 @@ function App() {
     }
   }
 
-  const mapCounters = (condition1: string[] | undefined, condition2: string | undefined, index: number) => {
-    if (condition2 && 
-      condition1?.includes(condition2)) {
-        return 
-      } else if (condition2) {
-        console.log(condition2?.match(/media\/(.*?)\./));
+
+  /* --- condition1: string[] | undefined = [weakAgainst0, weakAgainst1, strongAgainst(0|1)] --- */
+  const mapCounters = (condition1: (string[] | undefined)[], condition2: string | undefined, index: number) => {
+    if (condition2) {
+      if (condition1?.[0]?.includes(condition2) && condition1?.[1]?.includes(condition2)) {
+        return;
+      } else if (condition1?.[2]?.includes(condition2) && condition1?.[0]?.includes(condition2)) {
+        return;
+      } else {
         return (
           <img
             key={index}
@@ -118,8 +121,9 @@ function App() {
             src={condition2}
             title={condition2?.match(/media\/(.*?)\./)?.[1]}
           ></img>
-        )
+        );
       }
+    }
   }
   
   const resetTypes = () => {
@@ -137,12 +141,22 @@ function App() {
             <div className='counters-img-container'>
               {
                 selectedImage && selectedImage[0]?.weakAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[1]?.strongAgainst, selectedImage?.[0]?.weakAgainst?.[index], index);
+                  let str: (string[] | undefined)[] = [
+                    selectedImage?.[0]?.strongAgainst,
+                    selectedImage?.[1]?.strongAgainst,
+                    selectedImage?.[1]?.weakAgainst,
+                  ];
+                  return mapCounters(str, selectedImage?.[0]?.weakAgainst?.[index], index);
                 })
               }
               {
                 selectedImage && selectedImage[1]?.weakAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.weakAgainst?.[index], index);
+                  let str: (string[] | undefined)[] = [
+                    selectedImage?.[1]?.strongAgainst,
+                    selectedImage?.[0]?.strongAgainst,
+                    selectedImage?.[0]?.weakAgainst,
+                  ];
+                  return mapCounters(str, selectedImage?.[1]?.weakAgainst?.[index], index);
                 })
               }
             </div>
@@ -177,12 +191,22 @@ function App() {
             <div className='counters-img-container'>
               {
                 selectedImage && selectedImage[0]?.strongAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[1]?.weakAgainst, selectedImage?.[0]?.strongAgainst?.[index], index);
+                  let str: (string[] | undefined)[] = [
+                    selectedImage?.[0]?.weakAgainst,
+                    selectedImage?.[1]?.weakAgainst,
+                    selectedImage?.[1]?.strongAgainst,
+                  ];
+                  return mapCounters(str, selectedImage?.[0]?.strongAgainst?.[index], index);
                 })
               }
               {
                 selectedImage && selectedImage[1]?.strongAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.strongAgainst?.[index], index);
+                  let str: (string[] | undefined)[] = [
+                    selectedImage?.[1]?.strongAgainst,
+                    selectedImage?.[0]?.strongAgainst,
+                    selectedImage?.[0]?.weakAgainst,
+                  ];
+                  return mapCounters(str, selectedImage?.[1]?.strongAgainst?.[index], index);
 
                   /* if (selectedImage?.[1]?.strongAgainst?.[index] && 
                   selectedImage?.[0]?.strongAgainst.includes(selectedImage?.[1]?.strongAgainst?.[index])) {
