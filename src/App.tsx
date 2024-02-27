@@ -109,12 +109,14 @@ function App() {
     if (condition2 && 
       condition1?.includes(condition2)) {
         return 
-      } else {
+      } else if (condition2) {
+        console.log(condition2?.match(/media\/(.*?)\./));
         return (
           <img
             key={index}
             className='types-img'
             src={condition2}
+            title={condition2?.match(/media\/(.*?)\./)?.[1]}
           ></img>
         )
       }
@@ -135,12 +137,12 @@ function App() {
             <div className='counters-img-container'>
               {
                 selectedImage && selectedImage[0]?.weakAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[1]?.weakAgainst, selectedImage?.[0]?.weakAgainst?.[index], index);
+                  return mapCounters(selectedImage?.[1]?.strongAgainst, selectedImage?.[0]?.weakAgainst?.[index], index);
                 })
               }
               {
                 selectedImage && selectedImage[1]?.weakAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst?.[index], index);
+                  return mapCounters(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.weakAgainst?.[index], index);
                 })
               }
             </div>
@@ -175,12 +177,12 @@ function App() {
             <div className='counters-img-container'>
               {
                 selectedImage && selectedImage[0]?.strongAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[1]?.strongAgainst, selectedImage?.[0]?.strongAgainst?.[index], index);
+                  return mapCounters(selectedImage?.[1]?.weakAgainst, selectedImage?.[0]?.strongAgainst?.[index], index);
                 })
               }
               {
                 selectedImage && selectedImage[1]?.strongAgainst.map((type, index) => {
-                  return mapCounters(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst?.[index], index);
+                  return mapCounters(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.strongAgainst?.[index], index);
 
                   /* if (selectedImage?.[1]?.strongAgainst?.[index] && 
                   selectedImage?.[0]?.strongAgainst.includes(selectedImage?.[1]?.strongAgainst?.[index])) {
