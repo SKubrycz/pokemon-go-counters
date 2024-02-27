@@ -63,6 +63,14 @@ body, html {
     }
 }
 
+.weak-container {
+    h4 {color: rgb(220, 50, 50)}
+}
+
+.strong-container {
+    h4 {color: rgb(50, 220, 50)}
+}
+
 .counters-img-container {
 
     display: flex;
@@ -123,6 +131,10 @@ body, html {
         display: flex;
         flex-direction: row;
     }
+
+    img {
+        cursor: pointer;
+    }
 }
 
 .types-chosen-absolute {
@@ -140,6 +152,8 @@ body, html {
 .types-reset {
     width: 60px;
     height: 60px;
+
+    cursor: pointer;
 }
 
 .types-all {
@@ -147,4 +161,8 @@ body, html {
     flex: 10;
 
     background-color: adjust-color($color: $mainBg, $saturation: 15%, $lightness: -12%);
+
+    img {
+        cursor: pointer;
+    }
 }
