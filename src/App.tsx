@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef, ReactInstance } from 'react';
+import {useState, useEffect, useRef} from 'react';
 
 import './App.scss';
 
@@ -10,8 +10,6 @@ import { Type, getTypes } from './getTypes';
 
 
 function App() {
-  //const chosenRef = useRef<HTMLImageElement | null>(null);
-
   const [selectedImage, setSelectedImage] = useState<(Type | null)[] | null>(null);
   const [weak, setWeak] = useState<(string[] | undefined)[] | undefined>(undefined);
   const [strong, setStrong] = useState<string[] | undefined>(undefined);
@@ -36,7 +34,7 @@ function App() {
     }
   } */
 
-  const findIntersection = (a: string[], b: string[]): string[] => {
+  /* const findIntersection = (a: string[], b: string[]): string[] => {
     console.log(`findIntersection`);
     return a.filter(el => b.includes(el));
   }
@@ -50,7 +48,7 @@ function App() {
       ...a.filter(el => !b.includes(el)),
       ...b.filter(el => !a.includes(el))
     ];
-  }
+  } */
   
   const chooseType = (type: Type | null) => {
     setSelectedImage(prevImages => {
