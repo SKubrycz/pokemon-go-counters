@@ -11,7 +11,7 @@ import { Type, getTypes } from './getTypes';
 
 function App() {
   const [selectedImage, setSelectedImage] = useState<(Type | null)[] | null>(null);
-  const [weak, setWeak] = useState<(string[] | undefined)[] | undefined>(undefined);
+  const [weak, setWeak] = useState<string[] | undefined>(undefined);
   const [strong, setStrong] = useState<string[] | undefined>(undefined);
 
   const typesArray: Type[] = getTypes();
@@ -54,13 +54,13 @@ function App() {
     setSelectedImage(prevImages => {
       if (prevImages && prevImages.length === 2) {
         if (prevImages[0]?.title === type?.title) {
-          setWeak([prevImages[1]?.weakAgainst]);
+          //setWeak([prevImages[1]?.weakAgainst]);
           return [prevImages[1]]; //if first type is the same
         } else if (prevImages[1]?.title === type?.title) {
-          setWeak([prevImages[0]?.weakAgainst]);
+          //setWeak([prevImages[0]?.weakAgainst]);
           return [prevImages[0], ]; //if second type is the same
         } else {
-          setWeak([prevImages[0]?.weakAgainst, type?.weakAgainst]);
+          //setWeak([prevImages[0]?.weakAgainst, type?.weakAgainst]);
           return [prevImages[0], type];
         }
       } else {
@@ -68,14 +68,13 @@ function App() {
           setWeak(undefined);
           return [];
         } else {
-          setWeak(prevWeak => {
+          /* setWeak(prevWeak => {
             return [...(prevWeak || []), type?.weakAgainst]
-          });
+          }); */
           return [...(prevImages || []), type]; //if less than two img, add new one
         }
       }
     });
-    console.log(weak);
   }
 
   const randomizeTypes = () => {
@@ -102,6 +101,30 @@ function App() {
       });
     }
   }
+
+  const removeDuplicates = (arr1: string[] | undefined, arr2: string[] | undefined) => {
+    let newArray: string[] | undefined;
+
+    //[selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst]
+
+    if (arr1 !== undefined && arr2 !== undefined) {
+      newArray = arr1?.concat(arr2);
+
+      console.log(newArray.filter((value, index) => newArray?.indexOf(value) === index));
+
+      return newArray.filter((value, index) => newArray?.indexOf(value) === index);
+    } else {
+      newArray = (arr1) ? arr1 : arr2;
+
+      console.log(newArray);
+      return newArray;
+    }
+  }
+
+  useEffect(() => {
+    setWeak(removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst))
+    setStrong(removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst));
+  }, [selectedImage]);
 
 
   /* --- condition1: string[] | undefined = [weakAgainst0, weakAgainst1, strongAgainst(0|1)] --- */
@@ -138,24 +161,26 @@ function App() {
             <h4>Weak Against:</h4>
             <div className='counters-img-container'>
               {
-                selectedImage && selectedImage[0]?.weakAgainst.map((type, index) => {
-                  let str: (string[] | undefined)[] = [
-                    selectedImage?.[0]?.strongAgainst,
-                    selectedImage?.[1]?.strongAgainst,
-                    selectedImage?.[1]?.weakAgainst,
-                  ];
-                  return mapCounters(str, selectedImage?.[0]?.weakAgainst?.[index], index);
+                weak && weak.map((type, index) => {
+                  return (
+                    <img
+                    key={index}
+                    className='types-img'
+                    src={weak?.[index]}
+                    title={type?.match(/media\/(.*?)\./)?.[index]}
+                  />
+                  )
                 })
               }
               {
-                selectedImage && selectedImage[1]?.weakAgainst.map((type, index) => {
+                /* selectedImage && selectedImage[1]?.weakAgainst.map((type, index) => {
                   let str: (string[] | undefined)[] = [
                     selectedImage?.[1]?.strongAgainst,
                     selectedImage?.[0]?.strongAgainst,
                     selectedImage?.[0]?.weakAgainst,
                   ];
                   return mapCounters(str, selectedImage?.[1]?.weakAgainst?.[index], index);
-                })
+                }) */
               }
             </div>
           </div>
@@ -188,23 +213,19 @@ function App() {
             <h4>Strong Against:</h4>
             <div className='counters-img-container'>
               {
-                selectedImage && selectedImage[0]?.strongAgainst.map((type, index) => {
-                  let str: (string[] | undefined)[] = [
-                    selectedImage?.[0]?.weakAgainst,
-                    selectedImage?.[1]?.weakAgainst,
-                    selectedImage?.[1]?.strongAgainst,
-                  ];
-                  return mapCounters(str, selectedImage?.[0]?.strongAgainst?.[index], index);
+                strong && strong.map((type, index) => {
+                  return (
+                    <img
+                    key={index}
+                    className='types-img'
+                    src={strong?.[index]}
+                    title={type?.match(/media\/(.*?)\./)?.[index]}
+                  />
+                  )
                 })
               }
               {
-                selectedImage && selectedImage[1]?.strongAgainst.map((type, index) => {
-                  let str: (string[] | undefined)[] = [
-                    selectedImage?.[1]?.strongAgainst,
-                    selectedImage?.[0]?.strongAgainst,
-                    selectedImage?.[0]?.weakAgainst,
-                  ];
-                  return mapCounters(str, selectedImage?.[1]?.strongAgainst?.[index], index);
+                
 
                   /* if (selectedImage?.[1]?.strongAgainst?.[index] && 
                   selectedImage?.[0]?.strongAgainst.includes(selectedImage?.[1]?.strongAgainst?.[index])) {
@@ -217,8 +238,8 @@ function App() {
                         src={selectedImage?.[1]?.strongAgainst?.[index]}
                       ></img>
                     )
-                  } */
-                })
+                  }
+                }) */
               }
             </div>
           </div>
