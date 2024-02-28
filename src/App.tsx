@@ -167,7 +167,7 @@ function App() {
                     key={index}
                     className='types-img'
                     src={weak?.[index]}
-                    title={type?.match(/media\/(.*?)\./)?.[index]}
+                    title={type?.match(/media\/(.*?)\./)?.[1]}
                   />
                   )
                 })
@@ -219,7 +219,7 @@ function App() {
                     key={index}
                     className='types-img'
                     src={strong?.[index]}
-                    title={type?.match(/media\/(.*?)\./)?.[index]}
+                    title={type?.match(/media\/(.*?)\./)?.[1]}
                   />
                   )
                 })
