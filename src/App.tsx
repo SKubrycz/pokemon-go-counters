@@ -110,13 +110,13 @@ function App() {
     if (arr1 !== undefined && arr2 !== undefined) {
       newArray = arr1?.concat(arr2);
 
-      console.log(newArray.filter((value, index) => newArray?.indexOf(value) === index));
+      //console.log(newArray.filter((value, index) => newArray?.indexOf(value) === index));
 
       return newArray.filter((value, index) => newArray?.indexOf(value) === index);
     } else {
       newArray = (arr1) ? arr1 : arr2;
 
-      console.log(newArray);
+      //console.log(newArray);
       return newArray;
     }
   }
@@ -124,6 +124,8 @@ function App() {
   useEffect(() => {
     setWeak(removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst))
     setStrong(removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst));
+
+    //setStrong(updatedStrong);
   }, [selectedImage]);
 
 
