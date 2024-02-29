@@ -54,23 +54,16 @@ function App() {
     setSelectedImage(prevImages => {
       if (prevImages && prevImages.length === 2) {
         if (prevImages[0]?.title === type?.title) {
-          //setWeak([prevImages[1]?.weakAgainst]);
           return [prevImages[1]]; //if first type is the same
         } else if (prevImages[1]?.title === type?.title) {
-          //setWeak([prevImages[0]?.weakAgainst]);
           return [prevImages[0], ]; //if second type is the same
         } else {
-          //setWeak([prevImages[0]?.weakAgainst, type?.weakAgainst]);
           return [prevImages[0], type];
         }
       } else {
         if (prevImages && prevImages[0]?.title === type?.title) {
-          setWeak(undefined);
           return [];
         } else {
-          /* setWeak(prevWeak => {
-            return [...(prevWeak || []), type?.weakAgainst]
-          }); */
           return [...(prevImages || []), type]; //if less than two img, add new one
         }
       }
@@ -123,10 +116,11 @@ function App() {
 
   const arr1: string[] = ['1', '2', '3'];
   const arr2: string[] = ['1', '4', '5'];
-  const selectArr: string = '6';
+  const selectArr1: string = '6';
+  const selectArr2: string = '2';
 
-  const removeBoth = (arr1: string[] | undefined, arr2: string[] | undefined, selectArr: string | undefined) => {
-    const newArray: string[] | undefined = arr1?.filter((item) => arr2?.includes(item) && !selectArr?.includes(item));
+  const removeBoth = (arr1: string[] | undefined, arr2: string[] | undefined, selectArr1: string | undefined, selectArr2: string | undefined) => {
+    const newArray: string[] | undefined = arr1?.filter((item) => arr2?.includes(item) && (!selectArr1?.includes(item) && !selectArr2?.includes(item)));
     console.log(newArray);
 
     const arr1Array: string[] | undefined = arr1?.filter(item => !newArray?.includes(item));
@@ -134,26 +128,27 @@ function App() {
 
     return arr1Array;
   }
-  removeBoth(arr1, arr2, selectArr);
+  removeBoth(arr1, arr2, selectArr1, selectArr2);
 
   useEffect(() => {
     //setWeak(removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst))
     //setStrong(removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst));
 
     let dupesWeak: string[] | undefined = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
-    let removedWeak: string[] | undefined = removeBoth(dupesWeak, strong, selectedImage?.[0]?.src);
+    let dupesStrong: string[] | undefined = removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst);
+
+    let removedWeak: string[] | undefined = removeBoth(dupesWeak, dupesStrong, selectedImage?.[0]?.src, selectedImage?.[1]?.src);
 
     setWeak(removedWeak);
 
-    let dupesStrong: string[] | undefined = removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst);
-    let removedStrong: string[] | undefined = removeBoth(dupesStrong, weak, selectedImage?.[0]?.src);
+    let removedStrong: string[] | undefined = removeBoth(dupesStrong, dupesWeak, selectedImage?.[0]?.src, selectedImage?.[1]?.src);
 
     setStrong(removedStrong);
 
-    dupesWeak = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
+    /* dupesWeak = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
     removedWeak = removeBoth(dupesWeak, strong, selectedImage?.[0]?.src);
 
-    setWeak(removedWeak);
+    setWeak(removedWeak); */
 
     //setStrong(removeBoth(strong, weak, selectedImage?.[0]?.src));
   }, [selectedImage]);
@@ -232,7 +227,7 @@ function App() {
             {typesArray.map((type, index) => (
                 <img
                   key={index}
-                  className='types-img'
+                  className={`types-img ${(type.title === selectedImage?.[0]?.title || type.title === selectedImage?.[1]?.title) ? 'types-all-highlight' : ''}`}
                   src={type.src}
                   onClick={() => chooseType(type)}
                   title={type.title}
