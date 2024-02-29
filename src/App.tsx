@@ -121,11 +121,41 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    setWeak(removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst))
-    setStrong(removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst));
+  const arr1: string[] = ['1', '2', '3'];
+  const arr2: string[] = ['1', '4', '5'];
+  const selectArr: string = '6';
 
-    //setStrong(updatedStrong);
+  const removeBoth = (arr1: string[] | undefined, arr2: string[] | undefined, selectArr: string | undefined) => {
+    const newArray: string[] | undefined = arr1?.filter((item) => arr2?.includes(item) && !selectArr?.includes(item));
+    console.log(newArray);
+
+    const arr1Array: string[] | undefined = arr1?.filter(item => !newArray?.includes(item));
+    console.log(arr1Array);
+
+    return arr1Array;
+  }
+  removeBoth(arr1, arr2, selectArr);
+
+  useEffect(() => {
+    //setWeak(removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst))
+    //setStrong(removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst));
+
+    let dupesWeak: string[] | undefined = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
+    let removedWeak: string[] | undefined = removeBoth(dupesWeak, strong, selectedImage?.[0]?.src);
+
+    setWeak(removedWeak);
+
+    let dupesStrong: string[] | undefined = removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst);
+    let removedStrong: string[] | undefined = removeBoth(dupesStrong, weak, selectedImage?.[0]?.src);
+
+    setStrong(removedStrong);
+
+    dupesWeak = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
+    removedWeak = removeBoth(dupesWeak, strong, selectedImage?.[0]?.src);
+
+    setWeak(removedWeak);
+
+    //setStrong(removeBoth(strong, weak, selectedImage?.[0]?.src));
   }, [selectedImage]);
 
 
