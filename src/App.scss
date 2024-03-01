@@ -8,16 +8,14 @@ body, html {
 
     background: {
         color: $mainBg;
-        image: linear-gradient(180deg, $mainBg 0%, adjust-color($mainBg, $hue: 30, $lightness: 20%) 100%);
+        image: linear-gradient(180deg, adjust-color($mainBg, $hue: -10, $lightness: 20%) 0%, $mainBg 50%, adjust-color($mainBg, $hue: 10, $lightness: 20%) 100%);
         size: 200% 200%;
         position: 0% 100%;
     }
 
-    animation: 20s bg-anim infinite linear;
+    animation: 30s bg-anim infinite linear;
 
     user-select: none;
-
-    overflow: hidden;
 }
 
 @keyframes bg-anim {
@@ -178,8 +176,4 @@ body, html {
     img {
         cursor: pointer;
     }
-}
-
-.types-all-highlight {
-    filter: drop-shadow(0px 0px 15px adjust-color($color: $mainBg, $saturation: 25%, $lightness: 30%));
 }
