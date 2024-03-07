@@ -195,6 +195,9 @@ function App() {
                     className='types-img'
                     src={weak?.[index]}
                     title={type?.match(/media\/(.*?)\./)?.[1]}
+                    style={{
+                      animation: `.3s chosen 1`,
+                    }}
                   />
                   )
                 })
@@ -215,7 +218,17 @@ function App() {
             <div className='types-chosen'>
               <div className='types-chosen-absolute'>
               {selectedImage && selectedImage.map((image, index) => (
-                <img key={index} className='types-img' onClick={() => chooseType(image)} src={image?.src || ''} alt={image?.alt || ''} title={image?.title || ''} />
+                <img 
+                  key={index} 
+                  className='types-img' 
+                  onClick={() => chooseType(image)} 
+                  src={image?.src || ''} 
+                  alt={image?.alt || ''} 
+                  title={image?.title || ''}
+                  style={{
+                    animation: `.3s chosen 1`,
+                  }}
+                />
               ))}
               </div>
               <div className='types-reset-container'>
@@ -275,13 +288,14 @@ function App() {
                     className='types-img'
                     src={strong?.[index]}
                     title={type?.match(/media\/(.*?)\./)?.[1]}
+                    style={{
+                      animation: `.3s chosen 1`,
+                    }}
                   />
                   )
                 })
               }
               {
-                
-
                   /* if (selectedImage?.[1]?.strongAgainst?.[index] && 
                   selectedImage?.[0]?.strongAgainst.includes(selectedImage?.[1]?.strongAgainst?.[index])) {
                     return   
