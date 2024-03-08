@@ -1,13 +1,13 @@
-import {useState, useEffect, useRef} from 'react';
+import { useState, useEffect } from 'react';
 
 import './App.scss';
 
-import {
-  Reset, Random
-} from './image-import';
+import TypesChosen from './Components/TypesChosen';
+import TypesToChoose from './Components/TypesToChoose';
+import Weak from './Components/Weak';
+import Strong from './Components/Strong';
 
 import { Type, getTypes } from './getTypes';
-
 
 function App() {
   const [selectedImage, setSelectedImage] = useState<(Type | null)[] | null>(null);
@@ -15,40 +15,6 @@ function App() {
   const [strong, setStrong] = useState<string[] | undefined>(undefined);
 
   const typesArray: Type[] = getTypes();
-
-  /* const checkFunction = (prev: (Type | null)[] | null, type: Type | null, property: keyof Type) => {
-    if (prev && prev.length === 2) {
-      if (prev[0]?.[property] === type?.[property]) {
-        return [prev[1]];
-      } else if (prev[1]?.[property] === type?.[property]) {
-        return [prev[0], ];
-      } else {
-        return [prev[0], type];
-      }
-    } else {
-      if (prev && prev[0]?.[property] === type?.[property]) {
-        return [];
-      } else {
-        return [...(prev || []), type];
-      }
-    }
-  } */
-
-  /* const findIntersection = (a: string[], b: string[]): string[] => {
-    console.log(`findIntersection`);
-    return a.filter(el => b.includes(el));
-  }
-
-  function symmetricDifference(a: string[], b: string[]): string[] {
-    console.log([
-      ...a.filter(el => !b.includes(el)),
-      ...b.filter(el => !a.includes(el))
-    ]);
-    return [
-      ...a.filter(el => !b.includes(el)),
-      ...b.filter(el => !a.includes(el))
-    ];
-  } */
   
   const chooseType = (type: Type | null) => {
     setSelectedImage(prevImages => {
@@ -98,26 +64,16 @@ function App() {
   const removeDuplicates = (arr1: string[] | undefined, arr2: string[] | undefined) => {
     let newArray: string[] | undefined;
 
-    //[selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst]
-
     if (arr1 !== undefined && arr2 !== undefined) {
       newArray = arr1?.concat(arr2);
-
-      //console.log(newArray.filter((value, index) => newArray?.indexOf(value) === index));
 
       return newArray.filter((value, index) => newArray?.indexOf(value) === index);
     } else {
       newArray = (arr1) ? arr1 : arr2;
 
-      //console.log(newArray);
       return newArray;
     }
   }
-
-  const arr1: string[] = ['1', '2', '3'];
-  const arr2: string[] = ['1', '4', '5'];
-  const selectArr1: string = '6';
-  const selectArr2: string = '2';
 
   const removeBoth = (arr1: string[] | undefined, arr2: string[] | undefined, selectArr1: string | undefined, selectArr2: string | undefined) => {
     const newArray: string[] | undefined = arr1?.filter((item) => arr2?.includes(item) && (!selectArr1?.includes(item) && !selectArr2?.includes(item)));
@@ -128,12 +84,8 @@ function App() {
 
     return arr1Array;
   }
-  removeBoth(arr1, arr2, selectArr1, selectArr2);
 
   useEffect(() => {
-    //setWeak(removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst))
-    //setStrong(removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst));
-
     let dupesWeak: string[] | undefined = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
     let dupesStrong: string[] | undefined = removeDuplicates(selectedImage?.[0]?.strongAgainst, selectedImage?.[1]?.strongAgainst);
 
@@ -144,35 +96,8 @@ function App() {
     let removedStrong: string[] | undefined = removeBoth(dupesStrong, dupesWeak, selectedImage?.[0]?.src, selectedImage?.[1]?.src);
 
     setStrong(removedStrong);
-
-    /* dupesWeak = removeDuplicates(selectedImage?.[0]?.weakAgainst, selectedImage?.[1]?.weakAgainst);
-    removedWeak = removeBoth(dupesWeak, strong, selectedImage?.[0]?.src);
-
-    setWeak(removedWeak); */
-
-    //setStrong(removeBoth(strong, weak, selectedImage?.[0]?.src));
   }, [selectedImage]);
 
-
-  /* --- condition1: string[] | undefined = [weakAgainst0, weakAgainst1, strongAgainst(0|1)] --- */
-  const mapCounters = (condition1: (string[] | undefined)[], condition2: string | undefined, index: number) => {
-    if (condition2) {
-      if (condition1?.[0]?.includes(condition2) && condition1?.[1]?.includes(condition2)) {
-        return;
-      } else if (condition1?.[2]?.includes(condition2) && condition1?.[0]?.includes(condition2)) {
-        return;
-      } else {
-        return (
-          <img
-            key={index}
-            className='types-img'
-            src={condition2}
-            title={condition2?.match(/media\/(.*?)\./)?.[1]}
-          ></img>
-        );
-      }
-    }
-  }
   
   const resetTypes = () => {
     setSelectedImage(null);
@@ -184,134 +109,27 @@ function App() {
     <div className='app'>
         <div className='title'>Pokemon Go Type Counters</div>
         <div className='all-container'>
-          <div className='weak-container'>
-            <h4>Weak Against:</h4>
-            <div className='counters-img-container'>
-              {
-                weak && weak.map((type, index) => {
-                  return (
-                    <img
-                    key={index}
-                    className='types-img'
-                    src={weak?.[index]}
-                    title={type?.match(/media\/(.*?)\./)?.[1]}
-                    style={{
-                      animation: `.3s chosen 1`,
-                    }}
-                  />
-                  )
-                })
-              }
-              {
-                /* selectedImage && selectedImage[1]?.weakAgainst.map((type, index) => {
-                  let str: (string[] | undefined)[] = [
-                    selectedImage?.[1]?.strongAgainst,
-                    selectedImage?.[0]?.strongAgainst,
-                    selectedImage?.[0]?.weakAgainst,
-                  ];
-                  return mapCounters(str, selectedImage?.[1]?.weakAgainst?.[index], index);
-                }) */
-              }
-            </div>
-          </div>
+          <Weak
+            weak={weak}
+          ></Weak>
+
           <div className='types-container'>
-            <div className='types-chosen'>
-              <div className='types-chosen-absolute'>
-              {selectedImage && selectedImage.map((image, index) => (
-                <img 
-                  key={index} 
-                  className='types-img' 
-                  onClick={() => chooseType(image)} 
-                  src={image?.src || ''} 
-                  alt={image?.alt || ''} 
-                  title={image?.title || ''}
-                  style={{
-                    animation: `.3s chosen 1`,
-                  }}
-                />
-              ))}
-              </div>
-              <div className='types-reset-container'>
-                <img className='types-reset' src={Random} onClick={randomizeTypes} title='Randomize' alt='randomize'></img>
-                <img className='types-reset' src={Reset} onClick={resetTypes} title='Reset' alt='reset'></img>
-              </div>
-            </div>
-            <div className='types-all'>
-            {typesArray.map((type, index) => {
-              let condition: boolean = type.title === selectedImage?.[0]?.title || type.title === selectedImage?.[1]?.title;
-
-              let colorAdjust: string;
-
-              switch(type.color) {
-                case '#414141': 
-                  colorAdjust = '#969696';
-                  break;
-                case '#828282':
-                  colorAdjust = '#C2C2C2';
-                  break;
-                case '#436E81': 
-                  colorAdjust = '#5E9AB5';
-                  break;
-                default:
-                  colorAdjust = type.color;
-              }
-
-              const style = {
-                filter: (condition) ? `drop-shadow(0px 0px 20px ${colorAdjust})` : '',
-                boxShadow: (condition) ? `0px 0px 0px 2px ${type.color}` : 'none',
-                borderRadius: (condition) ? `100%` : '0',
-              }
-
-              return (
-                <img
-                  key={index}
-                  className={`types-img`}
-                  src={type.src}
-                  onClick={() => chooseType(type)}
-                  title={type.title}
-                  alt={type.alt}
-                  style={style}
-                />
-              ); 
-              }
-              )}
-            </div>
+            <TypesChosen
+              selectedImage={selectedImage}
+              chooseType={chooseType}
+              randomizeTypes={randomizeTypes}
+              resetTypes={resetTypes}
+            ></TypesChosen>
+            <TypesToChoose 
+              typesArray={typesArray} 
+              selectedImage={selectedImage}
+              chooseType={chooseType}
+            ></TypesToChoose>
           </div>
-          <div className='strong-container'>
-            <h4>Strong Against:</h4>
-            <div className='counters-img-container'>
-              {
-                strong && strong.map((type, index) => {
-                  return (
-                    <img
-                    key={index}
-                    className='types-img'
-                    src={strong?.[index]}
-                    title={type?.match(/media\/(.*?)\./)?.[1]}
-                    style={{
-                      animation: `.3s chosen 1`,
-                    }}
-                  />
-                  )
-                })
-              }
-              {
-                  /* if (selectedImage?.[1]?.strongAgainst?.[index] && 
-                  selectedImage?.[0]?.strongAgainst.includes(selectedImage?.[1]?.strongAgainst?.[index])) {
-                    return   
-                  } else {
-                    return (
-                      <img
-                        key={index}
-                        className='types-img'
-                        src={selectedImage?.[1]?.strongAgainst?.[index]}
-                      ></img>
-                    )
-                  }
-                }) */
-              }
-            </div>
-          </div>
+
+          <Strong
+            strong={strong}
+          ></Strong>
         </div>
     </div>
   );
