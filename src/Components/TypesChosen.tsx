@@ -5,7 +5,7 @@ import {
   } from '../image-import';
 
 type ChooseTypeFunction = (type: Type | null) => void;
-type RandomizeTypesFunction = () => void;
+type RandomizeTypesFunction = (arr: Type[]) => void;
 type ResetTypesFunction = () => void;
 
 interface ComponentProps {
@@ -13,10 +13,10 @@ interface ComponentProps {
     chooseType: ChooseTypeFunction;
     randomizeTypes: RandomizeTypesFunction;
     resetTypes: ResetTypesFunction;
+    arr: Type[];
 }
 
-const TypesChosen: React.FC<ComponentProps> = ({ selectedImage, chooseType, randomizeTypes, resetTypes }) => {
-
+const TypesChosen: React.FC<ComponentProps> = ({ selectedImage, chooseType, randomizeTypes, resetTypes, arr }) => {
 
     return (
         <div className='types-chosen'>
@@ -36,7 +36,7 @@ const TypesChosen: React.FC<ComponentProps> = ({ selectedImage, chooseType, rand
             ))}
             </div>
             <div className='types-reset-container'>
-            <img className='types-reset' src={Random} onClick={randomizeTypes} title='Randomize' alt='randomize'></img>
+            <img className='types-reset' src={Random} onClick={() => randomizeTypes(arr)} title='Randomize' alt='randomize'></img>
             <img className='types-reset' src={Reset} onClick={resetTypes} title='Reset' alt='reset'></img>
             </div>
         </div>
