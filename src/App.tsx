@@ -36,7 +36,7 @@ function App() {
     });
   }
 
-  const randomizeTypes = () => {
+  const randomizeTypes = (arr: Type[]) => {
     let randomFirst: number = Math.floor(Math.random()*18);
     let randomSecond: number | null = Math.floor(Math.random()*(18*1.2));
 
@@ -48,15 +48,15 @@ function App() {
       }
     }
 
-    if (typesArray) {
+    if (arr) {
       if (randomSecond >= 18) randomSecond = null;
       console.log(`${randomFirst}, ${randomSecond}`);
       setSelectedImage(() => {
         if (randomSecond) {
-          return [typesArray[randomFirst], typesArray[randomSecond]];
+          return [arr[randomFirst], arr[randomSecond]];
         } else if (randomSecond === null) {
-          return [typesArray[randomFirst], ];
-        } else return [typesArray[randomFirst], typesArray[randomSecond]];
+          return [arr[randomFirst], ];
+        } else return [arr[randomFirst], arr[randomSecond]];
       });
     }
   }
@@ -117,8 +117,9 @@ function App() {
             <TypesChosen
               selectedImage={selectedImage}
               chooseType={chooseType}
-              randomizeTypes={randomizeTypes}
+              randomizeTypes={() => randomizeTypes(typesArray)}
               resetTypes={resetTypes}
+              arr={typesArray}
             ></TypesChosen>
             <TypesToChoose 
               typesArray={typesArray} 
