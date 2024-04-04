@@ -7,19 +7,19 @@ const Weak: React.FC<ComponentProps> = ({ weak }) => {
     return (
         <div className='weak-container'>
             <h4>Weak Against:</h4>
-            <div className='counters-img-container'>
+            <div className='counters-img-container' key={Math.floor(Math.random()*10)}>
               {
                 weak && weak.map((type, index) => {
                   return (
                     <img
-                    key={index}
-                    className='types-img'
-                    src={weak?.[index]}
-                    title={type?.match(/media\/(.*?)\./)?.[1]}
-                    style={{
-                      animation: `.3s chosen 1`,
-                    }}
-                  />
+                      key={index}
+                      className='types-img'
+                      src={weak?.[index]}
+                      title={type?.match(/media\/(.*?)\./)?.[1]}
+                      style={{
+                        animation: `.3s chosen 1`,
+                      }}
+                    />
                   )
                 })
               }
