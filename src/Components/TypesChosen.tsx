@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { Type } from '../getTypes';
 
 import {
@@ -30,7 +32,7 @@ const TypesChosen: React.FC<ComponentProps> = ({ selectedImage, chooseType, rand
                 alt={image?.alt || ''} 
                 title={image?.title || ''}
                 style={{
-                animation: `.3s chosen 1`,
+                    animation: '.3s chosen 1',
                 }}
             />
             ))}
