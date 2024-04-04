@@ -8,7 +8,7 @@ const Strong: React.FC<ComponentProps> = ({ strong }) => {
     return (
         <div className='strong-container'>
             <h4>Strong Against:</h4>
-            <div className='counters-img-container'>
+            <div className='counters-img-container' key={Math.floor(Math.random()*10)}>
               {
                 strong && strong.map((type, index) => {
                   return (
