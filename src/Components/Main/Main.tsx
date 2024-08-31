@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { typesMap, Type, TypeWithCounters } from "../../assets/TypesMap";
 
@@ -13,7 +13,7 @@ export default function Main() {
   const [weak, setWeak] = useState<Array<Type>>([]);
   const [strong, setStrong] = useState<Array<Type>>([]);
 
-  const removeDuplicates = (arr: string[]) => {
+  const removeTypeDuplicates = (arr: Type[]) => {
     const newArr = arr.filter((item, i) => arr.indexOf(item) === i);
     return newArr;
   };
@@ -24,6 +24,24 @@ export default function Main() {
     } else if (a.id > b.id) {
       return 1;
     } else return 0;
+  };
+
+  const handleTypeCounters = () => {
+    console.log(weak);
+    let newWeak: Type[] = [];
+    let newStrong: Type[] = [];
+    chosenTypes.forEach((el, i) => {
+      el.weak.forEach((v) => {
+        newWeak.push(v);
+      });
+      el.strong.forEach((v) => {
+        newStrong.push(v);
+      });
+    });
+    newWeak = removeTypeDuplicates(newWeak);
+    newStrong = removeTypeDuplicates(newStrong);
+    setWeak(newWeak);
+    setStrong(newStrong);
   };
 
   const handleChooseType = (id: number) => {
@@ -41,6 +59,10 @@ export default function Main() {
       setChosenTypes(chosenTypes.filter((el) => el.id !== id).sort(sortLogic));
     }
   };
+
+  useEffect(() => {
+    handleTypeCounters();
+  }, [chosenTypes]);
 
   return (
     <>
