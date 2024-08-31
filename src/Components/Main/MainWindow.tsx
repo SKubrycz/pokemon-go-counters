@@ -1,19 +1,18 @@
-import Bug from "../../assets/Bug.svg";
-import Dark from "../../assets/Dark.svg";
-
 export default function MainWindow() {
   return (
-    <main className="p-5 bg-blue-950">
-      <section className="p-5 bg-gray-600 rounded-md">
+    <main className="p-5 bg-sky-600 flex flex-col items-center justify-center">
+      <section className="w-full p-5 bg-sky-700 rounded-md">
         <h3 className="mb-5 pb-2 font-medium text-xl border-transparent border-b-2 border-b-slate-50">
           Chosen Types
         </h3>
-        <div className="flex justify-center">
-          <img className="w-24 h-24" src={Bug}></img>
-          <img className="w-24 h-24" src={Dark}></img>
-        </div>
+        <div className="flex justify-center">Content</div>
       </section>
-      <section>Types to choose from</section>
+      <div className="w-10/12 h-1 m-5 bg-slate-200 rounded-sm"></div>
+      <section className=" w-full p-5 bg-sky-700 rounded-md">
+        <h3 className="mb-5 pb-2 font-medium text-xl border-transparent border-b-2 border-b-slate-50">
+          Types to choose from
+        </h3>
+      </section>
     </main>
   );
 }
