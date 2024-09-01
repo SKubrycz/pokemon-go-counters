@@ -14,7 +14,7 @@ export default function LayoutContainer({
       {title && title !== "" ? (
         <h3 className="m-1 p-2 text-lg">{title}</h3>
       ) : undefined}
-      <section className="min-h-24 p-5 flex flex-wrap bg-sky-600 rounded-md">
+      <section className="min-h-24 p-5 flex flex-wrap bg-sky-600 rounded-md shadow-md transition-shadow hover:shadow-xl">
         {children}
       </section>
     </aside>

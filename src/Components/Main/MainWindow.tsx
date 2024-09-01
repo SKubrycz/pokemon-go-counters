@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
 import HoverWindow from "../Hover/HoverWindow";
+import Image from "../Image";
 
 import { Type } from "../../assets/TypesMap";
 
@@ -28,7 +29,6 @@ export default function MainWindow({
   });
   const [hoverWindowVisibility, setHoverWindowVisibility] =
     useState<boolean>(false);
-  const [pokemon, setPokemon] = useState<any>();
 
   const type = useRef<number | null>(null);
 
@@ -52,9 +52,14 @@ export default function MainWindow({
     type.current = null;
   };
 
+  useEffect(() => {
+    if (chosenTypes.length === 0 || !chosenTypes)
+      setHoverWindowVisibility(false);
+  }, [chosenTypes]);
+
   return (
     <main className="p-5 bg-sky-600 flex flex-col items-center justify-center">
-      <section className="w-full p-5 bg-sky-700 rounded-md">
+      <section className="w-full p-5 bg-sky-700 rounded-md shadow-md transition-shadow hover:shadow-xl">
         <h3 className="mb-5 pb-2 font-medium text-xl border-transparent border-b-2 border-b-slate-50">
           Chosen Types
         </h3>
@@ -85,20 +90,21 @@ export default function MainWindow({
         )}
       </section>
       <div className="w-10/12 h-1 m-5 bg-slate-200 rounded-sm"></div>
-      <section className=" w-full p-5 bg-sky-700 rounded-md">
+      <section className=" w-full p-5 bg-sky-700 rounded-md shadow-md transition-shadow hover:shadow-xl">
         <h3 className="mb-5 pb-2 font-medium text-xl border-transparent border-b-2 border-b-slate-50">
           Types to choose from
         </h3>
         <div className="flex flex-wrap justify-center">
           {chooseTypes.map((type, i) => {
             return (
-              <img
+              <Image
                 key={i}
                 src={type.src}
                 alt={type.alt}
-                className="w-24 h-24 cursor-pointer"
+                w={96}
+                h={96}
                 onClick={() => handleChooseType(type.id)}
-              ></img>
+              ></Image>
             );
           })}
         </div>
