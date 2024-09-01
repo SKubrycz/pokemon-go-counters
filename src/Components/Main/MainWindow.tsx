@@ -29,6 +29,7 @@ export default function MainWindow({
   });
   const [hoverWindowVisibility, setHoverWindowVisibility] =
     useState<boolean>(false);
+  const [userHovers, setUserHovers] = useState<boolean>(false);
 
   const type = useRef<number | null>(null);
 
@@ -39,6 +40,7 @@ export default function MainWindow({
     type.current = t;
     setCoords({ x: x, y: y });
     setHoverWindowVisibility(true);
+    setUserHovers(true);
   };
 
   const updateCoords = (e: React.MouseEvent) => {
@@ -48,8 +50,11 @@ export default function MainWindow({
   };
 
   const handleWindowLeave = () => {
-    setHoverWindowVisibility(false);
     type.current = null;
+    setUserHovers(false);
+    setTimeout(() => {
+      setHoverWindowVisibility(false);
+    }, 190);
   };
 
   useEffect(() => {
@@ -86,6 +91,7 @@ export default function MainWindow({
             x={coords.x}
             y={coords.y}
             type={type.current}
+            userHovers={userHovers}
           ></HoverWindow>
         )}
       </section>

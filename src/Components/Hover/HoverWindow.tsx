@@ -6,9 +6,15 @@ interface HoverWindowProps {
   x: number;
   y: number;
   type: number | null;
+  userHovers: boolean;
 }
 
-export default function HoverWindow({ x, y, type }: HoverWindowProps) {
+export default function HoverWindow({
+  x,
+  y,
+  type,
+  userHovers,
+}: HoverWindowProps) {
   const [pokemonData, setPokemonData] = useState<any>();
 
   const fetchPokemonData = async (type: number | null) => {
@@ -40,7 +46,7 @@ export default function HoverWindow({ x, y, type }: HoverWindowProps) {
     <>
       <div
         style={{ top: y, left: x }}
-        className="min-w-24 min-h-24 p-2 absolute flex justify-center items-center bg-slate-400 pointer-events-none rounded-md"
+        className={`min-w-24 min-h-24 p-2 absolute flex justify-center items-center bg-slate-400 pointer-events-none rounded-md shadow-lg ${userHovers ? "animate-come-up" : "animate-vanish"}`}
       >
         <Suspense fallback={<div className="text-amber-500">Loading...</div>}>
           <div className="flex flex-col">
