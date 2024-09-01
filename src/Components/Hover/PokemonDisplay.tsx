@@ -40,10 +40,13 @@ export default function PokemonDisplay({ pokemonData }: any) {
     <>
       {pokemonNames
         ? pokemonNames.map((el, i) => {
-            const filteredStr = el.pokemon.name.split("-");
+            let cutString = el.pokemon.name.slice(1, el.pokemon.name.length);
+            let capitalized = el.pokemon.name[0].toUpperCase();
+            const name = capitalized + cutString;
+
             return (
               <>
-                <p key={i}>{filteredStr[0]}</p>
+                <p key={i}>{name}</p>
               </>
             );
           })
