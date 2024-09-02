@@ -5,6 +5,11 @@ import Image from "../Image";
 
 import { Type } from "../../assets/TypesMap";
 
+export interface TypeProp {
+  id: number | null;
+  name: string | null;
+}
+
 interface MainWindowProps {
   chosenTypes: Array<Type>;
   chooseTypes: Array<Type>;
@@ -31,9 +36,10 @@ export default function MainWindow({
     useState<boolean>(false);
   const [userHovers, setUserHovers] = useState<boolean>(false);
 
-  const type = useRef<number | null>(null);
+  const type = useRef<Type | null>(null);
+  const hoverOutTimeout = useRef<number | undefined>(undefined);
 
-  const handleHoverWindow = (e: React.MouseEvent, t: number | null) => {
+  const handleHoverWindow = (e: React.MouseEvent, t: Type | null) => {
     let x = e.clientX;
     let y = e.clientY;
     console.log(`x: ${x}, y: ${y}`);
@@ -54,10 +60,14 @@ export default function MainWindow({
   const handleWindowLeave = () => {
     type.current = null;
     setUserHovers(false);
-    setTimeout(() => {
+    hoverOutTimeout.current = setTimeout(() => {
       setHoverWindowVisibility(false);
     }, 190);
   };
+
+  useEffect(() => {
+    if (type.current !== null) clearTimeout(hoverOutTimeout.current);
+  }, [type.current]);
 
   useEffect(() => {
     if (chosenTypes.length === 0 || !chosenTypes)
@@ -79,7 +89,7 @@ export default function MainWindow({
                 alt={type.alt}
                 className="w-24 h-24 cursor-pointer"
                 onClick={() => handleRemoveType(type.id)}
-                onMouseOver={(e) => handleHoverWindow(e, type.id)}
+                onMouseOver={(e) => handleHoverWindow(e, type)}
                 onMouseMove={(e) => updateCoords(e)}
                 onMouseLeave={() => {
                   handleWindowLeave();
