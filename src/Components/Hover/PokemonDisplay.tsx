@@ -46,7 +46,15 @@ export default function PokemonDisplay({ pokemonData }: any) {
 
             return (
               <>
-                <p key={i}>{name}</p>
+                <div
+                  key={i}
+                  className="w-full flex flex-col justify-center items-center"
+                >
+                  <p className="m-0.5">{name}</p>
+                  {i !== pokemonNames.length - 1 ? (
+                    <div className="w-2/6 border-b-1 border-dashed border-slate-300"></div>
+                  ) : undefined}
+                </div>
               </>
             );
           })

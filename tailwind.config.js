@@ -5,8 +5,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      borderWidth: {
+        "b-1": "0px 0px 1px 0px",
+      },
       gridTemplateColumns: {
-        "1-2-1": "1fr 2fr 1fr",
+        "wide-center": "2fr 5fr 2fr",
       },
       keyframes: {
         comeUp: {
