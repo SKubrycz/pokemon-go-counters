@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       gridTemplateColumns: {
-        "1-2-1": "1fr 2fr 1fr",
+        "wide-center": "2fr 5fr 2fr",
       },
       keyframes: {
         comeUp: {

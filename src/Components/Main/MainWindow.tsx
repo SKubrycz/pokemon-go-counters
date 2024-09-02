@@ -39,7 +39,9 @@ export default function MainWindow({
     console.log(`x: ${x}, y: ${y}`);
     type.current = t;
     setCoords({ x: x, y: y });
-    setHoverWindowVisibility(true);
+    setTimeout(() => {
+      setHoverWindowVisibility(true);
+    }, 100);
     setUserHovers(true);
   };
 
