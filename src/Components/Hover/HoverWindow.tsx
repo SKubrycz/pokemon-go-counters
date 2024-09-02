@@ -49,8 +49,9 @@ export default function HoverWindow({
         className={`min-w-24 min-h-24 p-2 absolute flex justify-center items-center bg-slate-400 pointer-events-none rounded-md shadow-lg ${userHovers ? "animate-come-up" : "animate-vanish"}`}
       >
         <Suspense fallback={<div className="text-amber-500">Loading...</div>}>
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center p-2 bg-slate-500 rounded-md">
             <h3 className="font-medium text-xl">Pokemon of this type:</h3>
+            <div className="w-10/12 h-0.5 m-2 bg-slate-200 rounded-sm"></div>
             <PokemonDisplay pokemonData={pokemonData}></PokemonDisplay>
           </div>
         </Suspense>

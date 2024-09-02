@@ -5,6 +5,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      borderWidth: {
+        "b-1": "0px 0px 1px 0px",
+      },
       gridTemplateColumns: {
         "wide-center": "2fr 5fr 2fr",
       },
