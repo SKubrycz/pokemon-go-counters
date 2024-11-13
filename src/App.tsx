@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div className="flex flex-col justify-center items-center text-center">
-        <nav className="w-full flex justify-start items-center p-3 mb-14 bg-sky-600 shadow-lg">
+        <nav className="w-full flex justify-start items-center p-3 mb-14 bg-sky-600 bg-opacity-75 border-b-1 border-sky-300 shadow-lg">
           <img
             src="pokego-types-logo.png"
             className="w-16 h-16 drop-shadow-lg saturate-150 brightness-110"

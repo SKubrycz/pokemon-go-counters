@@ -2,10 +2,12 @@ import { Suspense, useEffect, useState } from "react";
 
 import PokemonDisplay from "./PokemonDisplay";
 
+import { Type } from "../../assets/TypesMap";
+
 interface HoverWindowProps {
   x: number;
   y: number;
-  type: number | null;
+  type: Type | null;
   userHovers: boolean;
 }
 
@@ -17,11 +19,11 @@ export default function HoverWindow({
 }: HoverWindowProps) {
   const [pokemonData, setPokemonData] = useState<any>();
 
-  const fetchPokemonData = async (type: number | null) => {
+  const fetchPokemonData = async (id: number | null) => {
     if (type !== null) {
       let res: any;
       try {
-        res = await fetch(`https://pokeapi.co/api/v2/type/${type}?limit=1`, {
+        res = await fetch(`https://pokeapi.co/api/v2/type/${id}?limit=1`, {
           method: "GET",
         });
         console.log(res);
@@ -34,7 +36,7 @@ export default function HoverWindow({
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      fetchPokemonData(type);
+      if (type) fetchPokemonData(type.id);
       console.log(pokemonData);
     }, 300);
     return () => clearTimeout(timeout);
@@ -45,15 +47,20 @@ export default function HoverWindow({
   return (
     <>
       <div
-        style={{ top: y, left: x }}
-        className={`min-w-24 min-h-24 p-2 absolute flex justify-center items-center bg-slate-400 pointer-events-none rounded-md shadow-lg ${userHovers ? "animate-come-up" : "animate-vanish"}`}
+        style={{
+          top: y,
+          left: x,
+          borderColor: type?.color,
+          backgroundColor: `${type?.color}AF`,
+        }}
+        className={`min-w-24 min-h-24 p-4 absolute flex flex-col justify-center items-center bg-opacity-80 backdrop-blur-sm pointer-events-none rounded-md border-1 border-slate-400 shadow-lg ${userHovers ? "animate-come-up" : "animate-vanish"} z-10`}
       >
         <Suspense fallback={<div className="text-amber-500">Loading...</div>}>
-          <div className="flex flex-col items-center p-2 bg-slate-500 rounded-md">
-            <h3 className="font-medium text-xl">Pokemon of this type:</h3>
-            <div className="w-10/12 h-0.5 m-2 bg-slate-200 rounded-sm"></div>
-            <PokemonDisplay pokemonData={pokemonData}></PokemonDisplay>
-          </div>
+          <h3 className="font-medium text-lg">
+            Pokemon of type {type ? type.alt : "-"}:
+          </h3>
+          <div className="w-10/12 h-0.5 m-2 bg-slate-200 rounded-sm"></div>
+          <PokemonDisplay pokemonData={pokemonData}></PokemonDisplay>
         </Suspense>
       </div>
     </>

@@ -10,7 +10,7 @@ export default function LayoutContainer({
   title,
 }: LayoutContainerProps) {
   return (
-    <aside className="p-5 bg-sky-500">
+    <aside className="p-5 bg-sky-500 bg-opacity-75">
       {title && title !== "" ? (
         <h3 className="m-1 p-2 text-lg">{title}</h3>
       ) : undefined}

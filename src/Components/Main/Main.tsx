@@ -83,7 +83,7 @@ export default function Main() {
 
   return (
     <>
-      <section className="w-5/6 my-2 mx-10 grid grid-cols-wide-center border-transparent rounded-md shadow-md overflow-hidden">
+      <section className="w-5/6 my-2 mx-10 grid grid-cols-wide-center border-transparent border-1 border-sky-300 rounded-md shadow-md overflow-hidden">
         <Weak weak={weak}></Weak>
         <MainWindow
           chooseTypes={chooseTypes}

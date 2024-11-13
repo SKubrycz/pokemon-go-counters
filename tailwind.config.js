@@ -6,6 +6,7 @@ export default {
   theme: {
     extend: {
       borderWidth: {
+        1: "1px",
         "b-1": "0px 0px 1px 0px",
       },
       gridTemplateColumns: {
