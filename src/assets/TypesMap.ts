@@ -1,4 +1,3 @@
-import { Fragment } from "react/jsx-runtime";
 import {
   BugIcon,
   DarkIcon,
@@ -25,6 +24,7 @@ export interface Type {
   name: string;
   src: string;
   alt: string;
+  color: string;
 }
 
 export interface TypeWithCounters extends Type {
@@ -41,108 +41,126 @@ const Normal = {
   name: "normal",
   src: NormalIcon,
   alt: "Normal",
+  color: "#828282",
 };
 const Fighting = {
   id: 2,
   name: "fighting",
   src: FightingIcon,
   alt: "Fighting",
+  color: "#BB3939",
 };
 const Flying = {
   id: 3,
   name: "flying",
   src: FlyingIcon,
   alt: "Flying",
+  color: "#9093DD",
 };
 const Poison = {
   id: 4,
   name: "poison",
   src: PoisonIcon,
   alt: "Poison",
+  color: "#D644D0",
 };
 const Ground = {
   id: 5,
   name: "ground",
   src: GroundIcon,
   alt: "Ground",
+  color: "#A9600B",
 };
 const Rock = {
   id: 6,
   name: "rock",
   src: RockIcon,
   alt: "Rock",
+  color: "#BCB175",
 };
 const Bug = {
   id: 7,
   name: "bug",
   src: BugIcon,
   alt: "Bug",
+  color: "#85C169",
 };
 const Ghost = {
   id: 8,
   name: "ghost",
   src: GhostIcon,
   alt: "Ghost",
+  color: "#9370DF",
 };
 const Steel = {
   id: 9,
   name: "steel",
   src: SteelIcon,
   alt: "Steel",
+  color: "#436E81",
 };
 const Fire = {
   id: 10,
   name: "fire",
   src: FireIcon,
   alt: "Fire",
+  color: "#E78239",
 };
 const Water = {
   id: 11,
   name: "water",
   src: WaterIcon,
   alt: "Water",
+  color: "#2E95DF",
 };
 const Grass = {
   id: 12,
   name: "grass",
   src: GrassIcon,
   alt: "Grass",
+  color: "#36A655",
 };
 const Electric = {
   id: 13,
   name: "electric",
   src: ElectricIcon,
   alt: "Electric",
+  color: "#DEBF1C",
 };
 const Psychic = {
   id: 14,
   name: "psychic",
   src: PsychicIcon,
   alt: "Psychic",
+  color: "#EC7785",
 };
 const Ice = {
   id: 15,
   name: "ice",
   src: IceIcon,
   alt: "Ice",
+  color: "#41A9BF",
 };
 const Dragon = {
   id: 16,
   name: "dragon",
   src: DragonIcon,
   alt: "Dragon",
+  color: "#204CA1",
 };
 const Dark = {
   id: 17,
   name: "dark",
   src: DarkIcon,
   alt: "Dark",
+  color: "#414141",
 };
 const Fairy = {
   id: 18,
   name: "fairy",
   src: FairyIcon,
   alt: "Fairy",
+  color: "#E398E0",
 };
 
 const typesMap: Array<TypeWithCounters> = [
